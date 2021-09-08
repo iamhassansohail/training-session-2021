@@ -28,6 +28,41 @@ export const getUserData = () => {
     }
 }
 
+export const login = (username, password, cb) => {
+    return (dispatch) => {
+        dispatch(_setProcessing(true));
+
+        axios.post("http://clipboard.hl7i.com/api/v1/user/login", {
+            username, password
+        })
+            .then(res => {
+                console.log("USER LOGIN RESPONSE" , res.data);
+                const content = res.data.content;
+
+                dispatch(_setAuthenticatedUserData(content));
+                dispatch(_setToken(content.token));
+                dispatch(_setAuthenticated(true));
+
+
+                dispatch(_setProcessing(false));
+
+
+                cb && cb();
+
+            })
+            .catch(err => {
+                console.error("USER_LOGIN ERROR" , err);
+
+                dispatch(_setAuthenticated(false));
+                dispatch(_setProcessing(false));
+
+                cb && cb(err);
+            })
+
+    }
+}
+
+
 
 // Dispatch Functions
 const _setUserData = (payload) => {
@@ -39,6 +74,24 @@ const _setUserData = (payload) => {
 const _setProcessing = (payload) => {
     return {
         type: Actions.SET_PROCESSING,
+        payload
+    }
+}
+const _setAuthenticated = (payload) => {
+    return {
+        type: Actions.SET_AUTHENTICATED,
+        payload
+    }
+}
+const _setAuthenticatedUserData = (payload) => {
+    return {
+        type: Actions.SET_AUTHENTICATED_USERDATA,
+        payload
+    }
+}
+const _setToken = (payload) => {
+    return {
+        type: Actions.SET_TOKEN,
         payload
     }
 }

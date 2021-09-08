@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import store from "./Store";
 
 // Component
-import MainComponent from "./Component/Main";
+import Navigation from "./Navigation";
 class App extends Component {
 
 
@@ -13,7 +13,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <>
-                    <MainComponent/>
+                    <Navigation/>
                 </>
             </Provider>
         )

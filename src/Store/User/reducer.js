@@ -3,6 +3,9 @@ import * as Actions from './action-types';
 // Initial State
 const initialState = {
     processing: false,
+    authenticated: false,
+    userData: null,
+    token: null,
     data: []
 };
 // Reducer
@@ -13,8 +16,7 @@ const reducer = (state = initialState, action) => {
 
     // action => type, payload
 
-    switch (type)
-    {
+    switch (type) {
         case Actions.SET_PROCESSING:
             newState.processing = payload;
             break;
@@ -23,12 +25,22 @@ const reducer = (state = initialState, action) => {
             newState.data = payload;
             break;
 
+        case Actions.SET_AUTHENTICATED:
+            newState.authenticated = payload;
+            break;
+
+        case Actions.SET_AUTHENTICATED_USERDATA:
+            newState.userData = payload;
+            break;
+
+        case Actions.SET_TOKEN:
+            newState.token = payload;
+            break;
+
         default:
             return newState;
             break;
     }
-
-
 
 
     return newState;
